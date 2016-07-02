@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <title>Hello world with Hapi</title>
+</head>
+
+<body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io('http://localhost:3000');
+        socket.on('count',function(data) {
+           loadCount(data);
+        });
+        
+        function loadCount(data) {
+             document.getElementById('count').innerHTML
+                 = data.count;
+        }
+     
+        function increaseCount() {
+            socket.emit('increase',{});
+        }
+        
+        socket.on('connection',function(data) {
+            loadCount(data);
+            increaseCount();
+        });
+    </script>
+
+    <div id="count"> </div>
+    <button id="clickMe" onclick="increaseCount();">Count </button>
+
+
+
+</body>
+
+</html>
